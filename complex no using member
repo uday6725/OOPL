@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+class Complex {
+public:
+    int real;
+    int imag;
+
+  
+    Complex(){
+  
+    real=0, imag=0;
+   }
+
+
+    void input() {
+        cout << "Enter value of real part: ";
+        cin >> real;
+        cout << "Enter value of imaginary part: ";
+        cin >> imag;
+    }
+
+    void display() const {
+        cout << "Complex number is " << real << " + " << imag << "i" << endl;
+    }
+
+
+    Complex add(const Complex &other) const {
+        Complex temp;
+        temp.real = real + other.real;
+        temp.imag = imag + other.imag;
+        return temp;
+    }
+
+    Complex subtract(const Complex &other) const {
+        Complex temp;
+        temp.real = real - other.real;
+        temp.imag = imag - other.imag;
+        return temp;
+    }
+
+    Complex multiply(const Complex &other) const {
+        Complex temp;
+        temp.real = real * other.real - imag * other.imag;
+        temp.imag = real * other.imag + imag * other.real;
+        return temp;
+    }
+
+    Complex divide(const Complex &other) const {
+        Complex temp;
+        int denominator = other.real * other.real + other.imag * other.imag; // Calculate denominator
+        if (denominator == 0) {
+            throw invalid_argument("Division by zero exception");
+        }
+        temp.real = (real * other.real + imag * other.imag) / denominator; // Real part
+        temp.imag = (imag * other.real - real * other.imag) / denominator; // Imaginary part
+        return temp;
+    }
+};
+
+int main() {
+    Complex obj1, obj2, obj3;
+    
+    cout << "Input for first complex number:" << endl;
+    obj1.input();
+    
+    cout << "Input for second complex number:" << endl;
+    obj2.input();
+
+    obj3 = obj1.add(obj2);
+    cout << "Addition: ";
+    obj3.display();
+
+    obj3 = obj1.subtract(obj2);
+    cout << "Subtraction: ";
+    obj3.display();
+
+    obj3 = obj1.multiply(obj2);
+    cout << "Multiplication: ";
+    obj3.display();
+
+    obj3 = obj1.divide(obj2);
+    cout << "Division: ";
+    obj3.display();
+
+    return 0;
+}
